@@ -42,6 +42,8 @@ namespace :songs do
     s.connect
 
     while true
+      Song.update_all playing: nil
+
       song = Song.next
       song.playing = true
       song.play_count += 1
@@ -57,12 +59,15 @@ namespace :songs do
         m.add 'title', song.to_s
         s.metadata = m
 
+        start = Time.now
+
         while data = file.read(BLOCKSIZE)
           s.send data
           s.sync
+
+          song.update_attributes playing: Time.now - start
         end
 
-        song.update_attributes playing: false
       end
     end
 

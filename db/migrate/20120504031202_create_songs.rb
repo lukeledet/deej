@@ -8,7 +8,7 @@ class CreateSongs < ActiveRecord::Migration
       t.string :path
       t.integer :length
       t.integer :play_count, default: 0
-      t.boolean :playing, default: false
+      t.integer :playing
 
       t.timestamps
     end

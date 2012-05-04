@@ -21,9 +21,9 @@ ActiveRecord::Schema.define(:version => 20120504034240) do
     t.string   "path"
     t.integer  "length"
     t.integer  "play_count", :default => 0
-    t.boolean  "playing",    :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.integer  "playing"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "votes", :force => true do |t|

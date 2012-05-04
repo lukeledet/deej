@@ -66,6 +66,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
+    <script type="text/javascript" charset="utf-8">
+      elapsed     = <%= Song.playing.playing %>
+      song_length = <%= Song.playing.length %>
+    </script>
 
   </body>
 </html>

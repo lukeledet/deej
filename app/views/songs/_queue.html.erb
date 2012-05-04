@@ -1,10 +1,23 @@
 <h3>Currently Playing</h3>
+
+<% if Song.playing %>
 <%= Song.playing %>
+<div class="progress progress-striped active">
+  <div class="bar" style="width: <%= Song.playing.current_percent %>%"></div>
+</div>
+<% else %>
+The radio is currently off.<br />
+<% end %>
+
+<a href="http://192.168.1.149:8000/dj.m3u">Click here to listen!</a>
 
 <h3>Queue</h3>
 <ul class="nav nav-list">
   <!-- <li class="nav-header">Sidebar</li> -->
   <% Song.queue.each do |song| %>
     <li><%= song.vote_count %> <%= song %></li>
+  <% end %>
+  <% if Song.queue.empty? %>
+  The queue is currently empty. Songs will be chosen from the library at random.
   <% end %>
 </ul>

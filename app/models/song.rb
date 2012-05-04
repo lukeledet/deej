@@ -8,7 +8,7 @@ class Song < ActiveRecord::Base
   end
 
   def self.playing
-    playing = where(playing: true).first.try(:to_s) || 'The radio is currently off'
+    where('playing is NOT NULL').first
   end
 
   def self.queue
@@ -29,5 +29,9 @@ class Song < ActiveRecord::Base
 
   def to_s
     "#{artist} - #{title}"
+  end
+
+  def current_percent
+    ((playing / length.to_f) * 100).to_i
   end
 end
