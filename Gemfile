@@ -4,6 +4,7 @@ gem 'rails', '3.2.3'
 gem 'sqlite3'
 
 gem 'jquery-rails'
+gem 'kaminari'
 gem 'taglib-ruby', require: 'taglib'
 gem 'ruby-shout', require: 'shout'
 
