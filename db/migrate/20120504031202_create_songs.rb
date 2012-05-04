@@ -4,9 +4,10 @@ class CreateSongs < ActiveRecord::Migration
       t.string :artist
       t.string :album
       t.string :title
+      t.string :genre
       t.string :path
       t.integer :length
-      t.integer :play_count
+      t.integer :play_count, default: 0
 
       t.timestamps
     end
