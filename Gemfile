@@ -5,6 +5,7 @@ gem 'sqlite3'
 
 gem 'jquery-rails'
 gem 'taglib-ruby', require: 'taglib'
+gem 'ruby-shout', require: 'shout'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
