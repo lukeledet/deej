@@ -1,5 +1,6 @@
 <% if @vote %>
-  $('.sidebar-nav').html('<%= escape_javascript(render 'songs/queue') %>')
+  $('.sidebar-nav').html('<%= escape_javascript(render 'songs/queue') %>');
+  $('#song_'+<%= @song.id %>).replaceWith('<%= escape_javascript(render partial: 'songs/song', object: @song) %>');
 <% else %>
 
 <% end %>

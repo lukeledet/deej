@@ -5,19 +5,7 @@
     <th>Vote</th>
   </tr>
 
-  <% @songs.each do |song| %>
-  <tr>
-    <td><%= song.artist %></td>
-    <td><%= song.title %></td>
-    <td>
-      <% if song.votes.active.where(ip: request.remote_ip).count > 0 %>
-      <span class="label label-success">You voted for this song!</span>
-      <% else %>
-      <%= link_to 'Vote', new_song_vote_path(song), remote: true, class: 'btn btn-mini btn-primary', id: "vote_#{song.id}" %>
-      <% end %>
-    </td>
-  </tr>
-  <% end %>
+  <%= render @songs %>
 </table>
 
 <%= paginate @songs, remote: params[:query].present? %>
