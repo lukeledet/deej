@@ -1,6 +1,10 @@
 class Vote < ActiveRecord::Base
-  belongs_to :song
   attr_accessible :ip
 
+  validates :ip, uniqueness: {scope: [:status, :song_id]}
+
+  belongs_to :song
+
   scope :active, where(status: 'active')
+  scope :top, active.group(:song_id).order('COUNT(*) DESC')
 end

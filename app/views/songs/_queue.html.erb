@@ -1,0 +1,10 @@
+<h3>Currently Playing</h3>
+<%= Song.playing %>
+
+<h3>Queue</h3>
+<ul class="nav nav-list">
+  <!-- <li class="nav-header">Sidebar</li> -->
+  <% Song.queue.each do |song| %>
+    <li><%= song.vote_count %> <%= song %></li>
+  <% end %>
+</ul>

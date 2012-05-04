@@ -43,6 +43,11 @@ namespace :songs do
 
     while true
       song = Song.next
+      song.playing = true
+      song.play_count += 1
+      song.save
+
+      song.votes.update_all status: 'played'
 
       puts "Playing #{song}"
 
@@ -57,10 +62,7 @@ namespace :songs do
           s.sync
         end
 
-        song.votes.update_all status: 'played'
-
-        song.play_count += 1
-        song.save
+        song.update_attributes playing: false
       end
     end
 

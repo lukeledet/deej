@@ -1,6 +1,7 @@
 Deej::Application.routes.draw do
-  resources :votes
-  resources :songs
+  resources :songs do
+    resources :votes
+  end
 
   root to: "songs#index"
 end
