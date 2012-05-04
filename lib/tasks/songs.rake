@@ -23,4 +23,46 @@ namespace :songs do
       end
     end
   end
+
+  desc "Play the songs!"
+  task :play => :environment do
+    BLOCKSIZE = 16384
+
+    s = Shout.new
+    s.mount = "/dj"
+    s.host = "localhost"
+    s.user = "source"
+    s.pass = "hackme"
+    s.format = Shout::MP3
+    s.name = 'SI DJ'
+    s.url = 'http://radio.searchinfluence.com'
+    s.genre = 'It takes all kinds'
+    s.description ='Your music, voted and random.'
+
+    s.connect
+
+    while true
+      song = Song.next
+
+      puts "Playing #{song}"
+
+      File.open(song.path) do |file|
+        m = ShoutMetadata.new
+        m.add 'filename', song.path
+        m.add 'title', song.to_s
+        s.metadata = m
+
+        while data = file.read(BLOCKSIZE)
+          s.send data
+          s.sync
+        end
+
+        song.votes.update_all status: 'played'
+
+        song.play_count += 1
+        song.save
+      end
+    end
+
+  end
 end
