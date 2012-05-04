@@ -28,6 +28,11 @@ namespace :songs do
   task :play => :environment do
     BLOCKSIZE = 16384
 
+    trap("INT") do
+      Song.update_all playing: nil
+      exit
+    end
+
     s = Shout.new
     s.mount = "/dj"
     s.host = "localhost"
