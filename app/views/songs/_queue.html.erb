@@ -5,6 +5,7 @@
 <div class="progress progress-striped active">
   <div class="bar" style="width: <%= Song.playing.current_percent %>%"></div>
 </div>
+<div id="current_progress"><%= Song.playing.current_progress%></div>
 <% else %>
 The radio is currently off.<br />
 <% end %>

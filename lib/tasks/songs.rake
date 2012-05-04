@@ -30,7 +30,7 @@ namespace :songs do
 
     trap("INT") do
       Song.update_all playing: nil
-      exit
+      abort('Quitting')
     end
 
     s = Shout.new
