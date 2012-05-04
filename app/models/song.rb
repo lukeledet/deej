@@ -18,7 +18,7 @@ class Song < ActiveRecord::Base
   end
 
   def self.next
-    top = Vote.active.group(:song_id).order('COUNT(*) DESC').pluck(:song_id).first
+    top = Vote.top.pluck(:song_id).first
 
     find_by_id(top) || random
   end
