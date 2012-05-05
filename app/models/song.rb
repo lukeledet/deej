@@ -11,16 +11,21 @@ class Song < ActiveRecord::Base
     where('playing is NOT NULL').first
   end
 
+  # Sort songs by number of votes then earliest vote
   def self.queue
-    select("*, (SELECT COUNT(*) FROM votes WHERE song_id=songs.id AND status='active') AS vote_count")
-    .where(["id IN (?)", Vote.top.pluck(:song_id)])
-    .order('vote_count DESC')
+    find_by_sql %q{
+      select s.*, vote_count
+      from songs s,
+        (select count(*) as vote_count, song_id, min(created_at) as created_at
+         from votes
+         where status='active'
+         group by song_id) v
+      where s.id=v.song_id order by v.created_at
+    }
   end
 
   def self.next
-    top = Vote.top.pluck(:song_id).first
-
-    find_by_id(top) || random
+    queue.first || random
   end
 
   def self.random

@@ -6,5 +6,4 @@ class Vote < ActiveRecord::Base
   belongs_to :song
 
   scope :active, where(status: 'active')
-  scope :top, active.group(:song_id).order('COUNT(*) DESC')
 end
