@@ -28,5 +28,5 @@ jQuery ($) ->
     $('#current_progress').html current + ' / ' + total
 
     if percent >= 100
-      location.reload true
+      $('#queue').load '/songs/queue'
   , 1000

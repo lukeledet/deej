@@ -49,7 +49,7 @@
               <%= yield %>
             </div>
             <div class="span3">
-              <div class="well sidebar-nav">
+              <div id="queue" class="well">
                 <%= render 'songs/queue' %>
               </div><!--/.well -->
             </div><!--/span-->
@@ -66,10 +66,5 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
-    <script type="text/javascript" charset="utf-8">
-      elapsed     = <%= Song.playing.try(:playing) || 'null' %>;
-      song_length = <%= Song.playing.try(:length) || 'null'%>;
-    </script>
-
   </body>
 </html>

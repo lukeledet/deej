@@ -26,3 +26,8 @@ The radio is currently off.<br />
   The queue is currently empty. Songs will be chosen from the library at random.
   <% end %>
 </ul>
+
+<script type="text/javascript" charset="utf-8">
+  elapsed     = <%= Song.playing.try(:playing) || 'null' %>;
+  song_length = <%= Song.playing.try(:length)  || 'null' %>;
+</script>
