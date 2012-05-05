@@ -3,12 +3,12 @@ module SongsHelper
     minutes, seconds = seconds.divmod 60
     hours, minutes = minutes.divmod 60
 
-    just = ->(x) {x.to_s.rjust 2, '0'}
+    pad = ->(x) {x.to_s.rjust 2, '0'}
 
     if hours > 0
-      "#{hours}:#{just[minutes]}:#{just[seconds]}"
+      "#{hours}:#{pad[minutes]}:#{pad[seconds]}"
     else
-      "#{minutes}:#{just[seconds]}"
+      "#{minutes}:#{pad[seconds]}"
     end
   end
 end
