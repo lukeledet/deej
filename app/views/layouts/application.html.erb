@@ -67,8 +67,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <%= javascript_include_tag "application" %>
     <script type="text/javascript" charset="utf-8">
-      elapsed     = <%= Song.playing.try :playing %>
-      song_length = <%= Song.playing.try :length %>
+      elapsed     = <%= Song.playing.try(:playing) || 'null' %>;
+      song_length = <%= Song.playing.try(:length) || 'null'%>;
     </script>
 
   </body>

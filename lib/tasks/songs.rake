@@ -44,13 +44,12 @@ namespace :songs do
     s.genre = 'It takes all kinds'
     s.description ='Your music, voted and random.'
 
-    s.connect
+    s.connect rescue abort('Can not connect to the icecast server')
 
     while true
-      Song.update_all playing: nil
+      Song.stop_playing!
 
       song = Song.next
-      song.playing = true
       song.play_count += 1
       song.save
 
@@ -67,7 +66,7 @@ namespace :songs do
         start = Time.now
 
         while data = file.read(BLOCKSIZE)
-          s.send data
+          s.send data rescue Song.stop_playing! && abort('Lost connection to icecast server')
           s.sync
 
           song.update_attributes playing: Time.now - start

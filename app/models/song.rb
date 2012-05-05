@@ -27,6 +27,10 @@ class Song < ActiveRecord::Base
     order('RANDOM()').first
   end
 
+  def self.stop_playing!
+    self.update_all playing: nil
+  end
+
   def to_s
     "#{artist} - #{title}"
   end

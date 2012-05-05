@@ -15,6 +15,8 @@ jQuery ($) ->
     $.ajax '/?query='+encodeURI(this.value), {dataType: 'script'}
 
   setInterval ->
+    return if !elapsed
+
     elapsed += 1;
     percent = elapsed / song_length * 100;
 
