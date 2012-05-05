@@ -12,7 +12,7 @@ format_time = (seconds) ->
 
 jQuery ($) ->
   $('.search-query').on 'keyup', ->
-    $.ajax '/?query='+encodeURI(this.value), {dataType: 'script'}
+    $.ajax '/?query='+encodeURI(this.value.replace(/^\s+|\s+$/g,'')), {dataType: 'script'}
 
   setInterval ->
     return if elapsed == null
