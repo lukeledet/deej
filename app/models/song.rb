@@ -4,7 +4,7 @@ class Song < ActiveRecord::Base
   has_many :votes
 
   def self.search query
-    where(["title LIKE ? OR artist LIKE ? OR path LIKE ?", *["%#{query}%"]*3])
+    where "title LIKE :q OR artist LIKE :q OR path LIKE :q", q: "%#{query}%"
   end
 
   def self.playing
