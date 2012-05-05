@@ -34,8 +34,4 @@ class Song < ActiveRecord::Base
   def current_percent
     ((playing / length.to_f) * 100).to_i
   end
-
-  def current_progress
-    "#{Time.at(playing).gmtime.strftime('%M:%S')} / #{Time.at(length).gmtime.strftime('%M:%S')}"
-  end
 end

@@ -1,6 +1,15 @@
 pad = (str, max) ->
   if str.toString().length < max then pad("0" + str, max) else str
 
+format_time = (seconds) ->
+  hours = parseInt( seconds / 3600 ) % 24;
+  minutes = parseInt( seconds / 60 ) % 60;
+  seconds = seconds % 60;
+  if hours > 0
+    current = hours + ':' + pad(minutes,2) + ':' + pad(seconds,2)
+  else
+    current = minutes + ':' + pad(seconds,2)
+
 jQuery ($) ->
   $('.search-query').on 'keyup', ->
     $.ajax '/?query='+encodeURI(this.value), {dataType: 'script'}
@@ -11,13 +20,8 @@ jQuery ($) ->
 
     $('.bar').css('width', percent + '%')
 
-    minutes = Math.floor elapsed / 60
-    seconds = elapsed % 60
-    current = pad(minutes,2)+':'+pad(seconds,2)
-
-    minutes = Math.floor song_length / 60
-    seconds = song_length % 60
-    total = pad(minutes,2)+':'+pad(seconds,2)
+    current = format_time elapsed
+    total = format_time song_length
 
     $('#current_progress').html current + ' / ' + total
 
