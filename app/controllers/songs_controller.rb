@@ -18,4 +18,12 @@ class SongsController < ApplicationController
       end
     end
   end
+
+  def download
+    song = Song.find params[:id]
+    song.downloads += 1
+    song.save
+
+    send_data open(song.path).read, filename: File.basename(song.path)
+  end
 end

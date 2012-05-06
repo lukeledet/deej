@@ -1,6 +1,6 @@
 <tr id="song_<%= song.id %>">
   <td><%= song.artist %></td>
-  <td><%= song.title %></td>
+  <td><%= link_to song.title, download_song_path(song) %></td>
   <td><%= format_time song.length %></td>
   <td>
     <% if song.votes.active.where(ip: request.remote_ip).count > 0 %>
