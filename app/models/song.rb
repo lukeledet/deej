@@ -34,6 +34,7 @@ class Song < ActiveRecord::Base
 
   def self.stop_playing!
     self.update_all playing: nil
+    Vote.skips.update_all status: 'old_skip'
   end
 
   def to_s
@@ -46,6 +47,7 @@ class Song < ActiveRecord::Base
 
   # Not sure where to put this but Song.playing.current_listeners seemed ok
   def current_listeners
+    return @current_listeners if @current_listeners
     return if CONFIG['icecast']['admin_user'].blank?
 
     # full_url is set in the app config initializer as a "helper"
@@ -53,6 +55,10 @@ class Song < ActiveRecord::Base
           http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
     stats = Hash.from_xml xml.read
 
-    stats['icestats']['source']['Listeners']
+    @current_listeners = stats['icestats']['source']['Listeners'].to_i
+  end
+
+  def skip?
+    votes.skips.count > 0 && votes.skips.count >= current_listeners / 2
   end
 end

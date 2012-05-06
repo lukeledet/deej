@@ -15,7 +15,7 @@ Current listeners: <%= Song.playing.current_listeners %><br />
 The radio is currently off.<br />
 <% end %>
 
-<a href="<%= CONFIG['icecast']['full_url']+CONFIG['icecast']['mount'] %>">Click here to listen!</a>
+<%= link_to 'Vote to skip this song', new_song_vote_path(Song.playing, status: 'skip'), remote: true %><br />
 
 <h3>Queue</h3>
 <ul class="nav nav-list">

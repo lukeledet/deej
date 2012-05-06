@@ -5,6 +5,8 @@
   <td>
     <% if song.votes.active.where(ip: request.remote_ip).count > 0 %>
     <span class="label label-info">You voted for this song!</span>
+    <% elsif song.votes.skips.where(ip: request.remote_ip).count > 0 %>
+    <span class="label label-warning">You voted to skip this song!</span>
     <% elsif song.playing? %>
     <span class="label label-success">This song is playing!</span>
     <% else %>

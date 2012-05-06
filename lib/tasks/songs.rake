@@ -73,6 +73,8 @@ namespace :songs do
           s.sync
 
           song.update_attributes playing: Time.now - start
+
+          break if Song.playing.skip?
         end
 
       end
