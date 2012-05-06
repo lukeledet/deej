@@ -12,3 +12,15 @@
     cursor: pointer;
   }
 }
+
+#song_list {
+  .artist_column {
+    width: 225px;
+  }
+  .length_column {
+    width: 65px;
+  }
+  .vote_column {
+    width: 120px;
+  }
+}
