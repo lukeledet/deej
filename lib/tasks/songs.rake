@@ -59,8 +59,8 @@ namespace :songs do
       puts "Playing #{song}"
 
       # This is ugly but Shout::Metadata isn't working
-      open("http://#{CONFIG['icecast']['host']}:#{CONFIG['icecast']['port']}" +
-           "/admin/metadata?mount=#{CONFIG['icecast']['mount']}&" +
+      open("#{CONFIG['icecast']['full_url']}/admin/metadata?" +
+           "mount=#{CONFIG['icecast']['mount']}&" +
            "mode=updinfo&song=#{URI.encode song.to_s}",
            http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
 
