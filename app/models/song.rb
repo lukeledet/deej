@@ -50,8 +50,8 @@ class Song < ActiveRecord::Base
     return @current_listeners if @current_listeners
     return if CONFIG['icecast']['admin_user'].blank?
 
-    # full_url is set in the app config initializer as a "helper"
-    xml = open(CONFIG['icecast']['full_url'] + "/admin/listclients?mount=#{CONFIG['icecast']['mount']}",
+    # admin_url is set in the app config initializer as a "helper"
+    xml = open(CONFIG['icecast']['admin_url'] + "/listclients?mount=#{CONFIG['icecast']['mount']}",
           http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
     stats = Hash.from_xml xml.read
 

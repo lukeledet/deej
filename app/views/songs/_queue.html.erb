@@ -1,21 +1,23 @@
 <h3>Currently Playing</h3>
 
-<% if Song.playing %>
-<%= Song.playing %>
+<% if @playing = Song.playing %>
+<%= @playing %>
 <div class="progress progress-striped active">
-  <div class="bar" style="width: <%= Song.playing.current_percent %>%"></div>
+  <div class="bar" style="width: <%= @playing.current_percent %>%"></div>
 </div>
 
 <div id="current_progress">
-  <%= format_time Song.playing.playing %> /
-  <%= format_time Song.playing.length %>
+  <%= format_time @playing.playing %> /
+  <%= format_time @playing.length %>
 </div>
-Current listeners: <%= Song.playing.current_listeners %><br />
+Current listeners: <%= @playing.current_listeners %><br />
 <% else %>
 The radio is currently off.<br />
 <% end %>
 
-<%= link_to 'Vote to skip this song', new_song_vote_path(Song.playing, status: 'skip'), remote: true %><br />
+<%= link_to 'Vote to skip this song', new_song_vote_path(@playing, status: 'skip'), remote: true %>
+(<%= @playing.votes.skips.count %> / <%= @playing.current_listeners > 1 ? @playing.current_listeners / 2 : 1 %> needed)
+<br />
 
 <h3>Queue</h3>
 <ul class="nav nav-list">
@@ -29,6 +31,6 @@ The radio is currently off.<br />
 </ul>
 
 <script type="text/javascript" charset="utf-8">
-  elapsed     = <%= Song.playing.try(:playing) || 'null' %>;
-  song_length = <%= Song.playing.try(:length)  || 'null' %>;
+  elapsed     = <%= @playing.try(:playing) || 'null' %>;
+  song_length = <%= @playing.try(:length)  || 'null' %>;
 </script>
