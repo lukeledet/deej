@@ -1,9 +1,9 @@
+require 'open-uri'
+
 namespace :songs do
   desc "Import the ID3 info of the songs in the database"
   task :import => :environment do
-    abort("ENV['MUSIC_DIR'] must be set") unless ENV['MUSIC_DIR']
-
-    Dir[ENV['MUSIC_DIR'] + '/**/*.{mp3,mp4}'].each do |filename|
+    Dir[CONFIG['music_dir'] + '/**/*.mp3'].each do |filename|
       next if Song.find_by_path(filename)
 
       TagLib::FileRef.open(filename) do |file|
@@ -29,20 +29,21 @@ namespace :songs do
     BLOCKSIZE = 16384
 
     trap("INT") do
-      Song.update_all playing: nil
+      Song.stop_playing!
       abort('Quitting')
     end
 
     s = Shout.new
-    s.mount = "/dj"
-    s.host = "localhost"
-    s.user = "source"
-    s.pass = "hackme"
+    s.host  = CONFIG['icecast']['host']
+    s.pass  = CONFIG['icecast']['source_pass']
+    s.mount = CONFIG['icecast']['mount']
+
+    s.name  = CONFIG['icecast']['name']
+    s.url   = CONFIG['icecast']['url']
+    s.genre = CONFIG['icecast']['genre']
+    s.description =CONFIG['icecast']['description']
+
     s.format = Shout::MP3
-    s.name = 'SI DJ'
-    s.url = 'http://radio.searchinfluence.com'
-    s.genre = 'It takes all kinds'
-    s.description ='Your music, voted and random.'
 
     s.connect rescue abort('Can not connect to the icecast server')
 
@@ -57,12 +58,13 @@ namespace :songs do
 
       puts "Playing #{song}"
 
-      File.open(song.path) do |file|
-        m = ShoutMetadata.new
-        m.add 'filename', song.path
-        m.add 'title', song.to_s
-        s.metadata = m
+      # This is ugly but Shout::Metadata isn't working
+      open("http://#{CONFIG['icecast']['host']}:#{CONFIG['icecast']['port']}" +
+           "/admin/metadata?mount=#{CONFIG['icecast']['mount']}&" +
+           "mode=updinfo&song=#{URI.encode song.to_s}",
+           http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
 
+      File.open(song.path) do |file|
         start = Time.now
 
         while data = file.read(BLOCKSIZE)

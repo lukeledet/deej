@@ -1,0 +1,13 @@
+icecast:
+  source_pass: hackme
+  host: localhost
+  port: 8000
+  mount: /dj
+  name: Deej
+  url: Oh
+  genre: All the music
+  description: Our tunes.
+  admin_user: admin
+  admin_pass: hackme
+  source_pass: hackme
+music_dir: /music
