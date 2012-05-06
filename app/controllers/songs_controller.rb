@@ -12,7 +12,8 @@ class SongsController < ApplicationController
       format.html { render partial: 'queue'}
       format.json do
         render json: {
-          playing: Song.playing.to_s
+          playing: Song.playing.to_s,
+          listeners: Song.playing.current_listeners
         }.to_json
       end
     end

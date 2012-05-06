@@ -43,4 +43,16 @@ class Song < ActiveRecord::Base
   def current_percent
     ((playing / length.to_f) * 100).to_i
   end
+
+  # Not sure where to put this but Song.playing.current_listeners seemed ok
+  def current_listeners
+    return if CONFIG['icecast']['admin_user'].blank?
+
+    # full_url is set in the app config initializer as a "helper"
+    xml = open(CONFIG['icecast']['full_url'] + "/admin/listclients?mount=#{CONFIG['icecast']['mount']}",
+          http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
+    stats = Hash.from_xml xml.read
+
+    stats['icestats']['source']['Listeners']
+  end
 end

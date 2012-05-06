@@ -59,6 +59,7 @@ namespace :songs do
       puts "Playing #{song}"
 
       # This is ugly but Shout::Metadata isn't working
+      # full_url is set in the app config initializer as a "helper"
       open("#{CONFIG['icecast']['full_url']}/admin/metadata?" +
            "mount=#{CONFIG['icecast']['mount']}&" +
            "mode=updinfo&song=#{URI.encode song.to_s}",

@@ -10,6 +10,7 @@
   <%= format_time Song.playing.playing %> /
   <%= format_time Song.playing.length %>
 </div>
+Current listeners: <%= Song.playing.current_listeners %><br />
 <% else %>
 The radio is currently off.<br />
 <% end %>
