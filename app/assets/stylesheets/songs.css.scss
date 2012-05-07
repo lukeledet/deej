@@ -23,4 +23,8 @@
   .vote_column {
     width: 120px;
   }
+
+  tr.selected {
+    background-color: #f5f5f5;
+  }
 }

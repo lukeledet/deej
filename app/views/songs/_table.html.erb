@@ -9,4 +9,4 @@
   <%= render @songs %>
 </table>
 
-<%= paginate @songs, remote: params[:query].present? %>
+<%= paginate @songs, remote: true %>

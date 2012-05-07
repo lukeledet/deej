@@ -10,16 +10,25 @@ format_time = (seconds) ->
   else
     current = minutes + ':' + pad(seconds,2)
 
+window.cancel_search = ->
+  key.setScope('all')
+  $('.navbar-search input').val('').keyup().blur()
+  $('#cancel-search').hide()
+
 jQuery ($) ->
-  $('.search-query').on 'keyup', ->
+  $('.search-query')
+  .on 'keyup', (e) ->
+    return false if e.keyCode in [37..40]
+
     $.ajax '/?query='+encodeURI(this.value.replace(/^\s+|\s+$/g,'')), {dataType: 'script'}
     $('#cancel-search').show()
     if this.value == ''
       $('#cancel-search').hide()
+  .focus ->
+    key.setScope('searching')
 
   $('#cancel-search').on 'click', ->
-    $('.search-query').val('').keyup()
-    $(this).hide()
+    cancel_search()
 
   setInterval ->
     return if elapsed == null

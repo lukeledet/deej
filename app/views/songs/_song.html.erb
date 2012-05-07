@@ -10,7 +10,7 @@
     <% elsif song.playing? %>
     <span class="label label-success">This song is playing!</span>
     <% else %>
-    <%= link_to 'Vote', new_song_vote_path(song), remote: true, class: 'btn btn-mini btn-primary', id: "vote_#{song.id}" %>
+    <%= link_to 'Vote', new_song_vote_path(song), remote: true, class: 'btn btn-mini btn-primary vote', id: "vote_#{song.id}" %>
     <% end %>
   </td>
 </tr>
