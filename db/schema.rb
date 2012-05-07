@@ -21,8 +21,7 @@ ActiveRecord::Schema.define(:version => 20120506080156) do
     t.string   "path"
     t.integer  "length"
     t.integer  "play_count", :default => 0
-    t.integer  "playing"
-    t.integer  "skips",      :default => 0
+    t.datetime "playing"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.integer  "downloads",  :default => 0

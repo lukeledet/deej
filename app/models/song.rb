@@ -42,7 +42,11 @@ class Song < ActiveRecord::Base
   end
 
   def current_percent
-    ((playing / length.to_f) * 100).to_i
+    ((elapsed / length.to_f) * 100).to_i
+  end
+
+  def elapsed
+    (Time.now - playing).floor
   end
 
   # Not sure where to put this but Song.playing.current_listeners seemed ok

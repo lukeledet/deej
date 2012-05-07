@@ -60,19 +60,17 @@ namespace :songs do
 
       # This is ugly but Shout::Metadata isn't working
       # full_url is set in the app config initializer as a "helper"
-      open("#{CONFIG['icecast']['full_url']}/admin/metadata?" +
+      open("#{CONFIG['icecast']['admin_url']}/metadata?" +
            "mount=#{CONFIG['icecast']['mount']}&" +
            "mode=updinfo&song=#{URI.encode song.to_s}",
            http_basic_authentication: [CONFIG['icecast']['admin_user'],CONFIG['icecast']['admin_pass']])
 
       File.open(song.path) do |file|
-        start = Time.now
+        song.update_attributes playing: Time.now
 
         while data = file.read(BLOCKSIZE)
           s.send data rescue Song.stop_playing! && abort('Lost connection to icecast server')
           s.sync
-
-          song.update_attributes playing: Time.now - start
 
           break if Song.playing.skip?
         end

@@ -7,18 +7,18 @@
 </div>
 
 <div id="current_progress">
-  <%= format_time @playing.playing %> /
+  <%= format_time @playing.elapsed %> /
   <%= format_time @playing.length %>
 </div>
+
 Current listeners: <%= @playing.current_listeners %><br />
-<% else %>
-The radio is currently off.<br />
-<% end %>
 
 <%= link_to 'Vote to skip this song', new_song_vote_path(@playing, status: 'skip'), remote: true %>
 (<%= @playing.votes.skips.count %> / <%= @playing.current_listeners > 1 ? @playing.current_listeners / 2 : 1 %> needed)
+<% else %>
+The radio is currently off.
+<% end %>
 <br />
-
 <h3>Queue</h3>
 <ul class="nav nav-list">
   <!-- <li class="nav-header">Sidebar</li> -->
@@ -31,6 +31,6 @@ The radio is currently off.<br />
 </ul>
 
 <script type="text/javascript" charset="utf-8">
-  elapsed     = <%= @playing.try(:playing) || 'null' %>;
+  elapsed     = <%= @playing.try(:elapsed) || 'null' %>;
   song_length = <%= @playing.try(:length)  || 'null' %>;
 </script>
