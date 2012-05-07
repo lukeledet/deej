@@ -14,7 +14,7 @@ You'll need to have an icecast server setup somewhere to use this.
 
 Getting started
 ---------------
-# Edit config/app_config.yml
-# Setup your database with rake db:schema:load
-# Import your music with rake songs:import
-# Start playing with rake songs:play
+* Edit config/app_config.yml
+* Setup your database with rake db:schema:load
+* Import your music with rake songs:import
+* Start playing your music with rake songs:play
