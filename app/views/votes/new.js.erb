@@ -1,6 +1,5 @@
 <% if @vote %>
   $('#queue').html('<%= escape_javascript(render 'songs/queue') %>');
   $('#song_'+<%= @song.id %>).replaceWith('<%= escape_javascript(render partial: 'songs/song', object: @song) %>');
-<% else %>
-
+  highlight_selected_song();
 <% end %>

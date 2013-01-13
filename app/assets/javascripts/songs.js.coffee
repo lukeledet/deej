@@ -15,6 +15,10 @@ window.cancel_search = ->
   $('.navbar-search input').val('').keyup().blur()
   $('#cancel-search').hide()
 
+window.highlight_selected_song = ->
+  $('#song_list tr').removeClass('selected')
+  $('#song_list tr:eq('+selected_song+')').addClass('selected')
+
 jQuery ($) ->
   $('.search-query')
   .on 'keyup', (e) ->
