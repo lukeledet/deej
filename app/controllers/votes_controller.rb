@@ -6,4 +6,13 @@ class VotesController < ApplicationController
     @vote.status = params[:status] if params[:status]
     @vote.save
   end
+
+  def destroy
+    @song = Song.find params[:song_id]
+
+    @vote = Vote.find params[:id]
+    @vote.destroy
+
+    render action: :new
+  end
 end

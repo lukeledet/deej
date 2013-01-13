@@ -3,8 +3,8 @@
   <td><%= link_to song.title, download_song_path(song) %></td>
   <td><%= format_time song.length %></td>
   <td>
-    <% if song.votes.active.where(ip: request.remote_ip).count > 0 %>
-    <span class="label label-info">You voted for this song!</span>
+    <% if vote = song.votes.active.where(ip: request.remote_ip).first %>
+    <%= link_to 'Remove your vote', song_vote_path(song, vote), method: :delete, remote: true, class: 'btn btn-mini btn-danger vote' %>
     <% elsif song.votes.skips.where(ip: request.remote_ip).count > 0 %>
     <span class="label label-warning">You voted to skip this song!</span>
     <% elsif song.playing? %>
