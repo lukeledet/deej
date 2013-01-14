@@ -34,6 +34,9 @@ jQuery ($) ->
   $('#cancel-search').on 'click', ->
     cancel_search()
 
+  $(document).on 'click', '.pagination a', ->
+    window.selected_song = null
+
   setInterval ->
     return if elapsed == null
 
